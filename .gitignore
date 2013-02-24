@@ -9,6 +9,7 @@
 
 # gwt caches and compiled units #
 war/gwt_bree/
+war/WebStore
 gwt-unitCache/
 
 # boilerplate generated classes #
