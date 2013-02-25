@@ -5,7 +5,7 @@
 # Package Files #
 *.jar
 *.war
-*.gitignore
+
 
 # gwt caches and compiled units #
 war/gwt_bree/
