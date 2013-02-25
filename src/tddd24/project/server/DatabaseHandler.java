@@ -1,5 +1,6 @@
 package tddd24.project.server;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,10 +8,13 @@ import java.sql.Statement;
 
 public class DatabaseHandler {
 
-	private static final String DB_PATH = ClassLoader.class.getResource(
-			"war/resources/WebStoreDB").getPath();
+	private String DB_PATH;
 	private static final String DB_PRODUCT_TABLE = "products";
 
+	public DatabaseHandler() {
+		//TODO initiate DB_PATH
+	}
+	
 	public Connection openConnection() {
 		try {
 			Class.forName("org.sqlite.JDBC");

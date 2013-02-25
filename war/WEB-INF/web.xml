@@ -4,7 +4,16 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-	<!-- TODO: Add <servlet> tags for each servlet here. -->
+	  <!-- Servlets -->
+  <servlet>
+    <servlet-name>productServiceImpl</servlet-name>
+    <servlet-class>tddd24.project.server.ProductServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>productServiceImpl</servlet-name>
+    <url-pattern>/WebStore/products</url-pattern>
+  </servlet-mapping>
 	<!-- TODO: Add <servlet-mapping> tags for each <servlet> here. -->
 	<!-- TODO: Optionally add a <welcome-file-list> tag to display a welcome file. -->
 </web-app>
