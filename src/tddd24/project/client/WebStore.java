@@ -7,5 +7,5 @@ public class WebStore implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 	}
-
+	
 }
