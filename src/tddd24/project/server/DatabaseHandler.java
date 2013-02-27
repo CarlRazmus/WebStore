@@ -1,25 +1,31 @@
 package tddd24.project.server;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import com.google.gwt.core.client.GWT;
+
 public class DatabaseHandler {
 
-	private String DB_PATH;
+	private String DB_PATH = "resurces/WebStoreDB";
 	private static final String DB_PRODUCT_TABLE = "products";
 
-	public DatabaseHandler() {
-		//TODO initiate DB_PATH
+	public DatabaseHandler()  {
+		File file = new File("resources/WebStoreDB");
+		DB_PATH = file.getAbsolutePath();
+		initiateDatabase();
 	}
 	
 	public Connection openConnection() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:"
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:/"
 					+ DB_PATH);
 			return conn;
 		} catch (Exception e) {
@@ -36,7 +42,7 @@ public class DatabaseHandler {
 
 			stat.executeUpdate("create table "
 					+ DB_PRODUCT_TABLE
-					+ " (id int, name varchar(20), price int, primary key (id));");
+					+ " (id int primary key, name varchar(20), price int);");
 			conn.close();
 
 		} catch (Exception e) {
@@ -48,9 +54,9 @@ public class DatabaseHandler {
 		try {
 			Connection conn = openConnection();
 			PreparedStatement prep = conn
-					.prepareStatement("insert into " + DB_PRODUCT_TABLE + " values (?, ?);");
+					.prepareStatement("insert into " + DB_PRODUCT_TABLE + "(name, price) values (?, ?);");
 			prep.setString(1, name);
-			prep.setInt(3, price);
+			prep.setInt(2, price);
 			prep.execute();
 
 			conn.close();
