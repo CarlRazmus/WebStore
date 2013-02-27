@@ -1,14 +1,14 @@
 package tddd24.project.server;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import com.google.gwt.core.client.GWT;
+import tddd24.project.client.Product;
 
 public class DatabaseHandler {
 
@@ -76,5 +76,24 @@ public class DatabaseHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Product> getAll(){
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			Connection conn = openConnection();
+			Statement stat = conn
+					.createStatement();
+			ResultSet rs = stat.executeQuery("select * from " + DB_PRODUCT_TABLE + ";");
+			while(rs.next())
+			{
+				products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("price")));
+			}
+			rs.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return products;
 	}
 }

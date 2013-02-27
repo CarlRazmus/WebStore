@@ -1,5 +1,7 @@
 package tddd24.project.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -21,7 +23,7 @@ public class WebStore implements EntryPoint {
 	    }
 
 	    // Set up the callback object.
-	    AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+	    AsyncCallback<Void> callback2 = new AsyncCallback<Void>() {
 	      public void onFailure(Throwable caught) {
 	        // TODO: Do something with errors.
 	      }
@@ -32,6 +34,23 @@ public class WebStore implements EntryPoint {
 	    };
 
 	    // Make the call to the stock price service.
-	    productSvc.addProduct("Pencil", 9001, callback);
+	    productSvc.addProduct("football", 123, callback2);
+	    
+	    // Set up the callback object.
+	    AsyncCallback<ArrayList<Product>> callback = new AsyncCallback<ArrayList<Product>>() {
+	      public void onFailure(Throwable caught) {
+	        // TODO: Do something with errors.
+	      }
+
+	      public void onSuccess(ArrayList<Product> result) {
+	        label.setText("success");
+	      }
+	    };
+
+	    // Make the call to the stock price service.
+	    productSvc.getAll(callback);
+	    
+	    
+
 	}
 }
