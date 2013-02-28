@@ -1,10 +1,19 @@
 package tddd24.project.client;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable{
 	private int id;
 	private String name;
 	private int price;
 
+	public Product()
+	{
+		id = -1;
+		name = "unknown";
+		price = -1;
+	}
+	
 	public Product(int id, String name, int price) {
 		this.id = id;
 		this.name = name;

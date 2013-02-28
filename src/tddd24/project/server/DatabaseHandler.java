@@ -18,7 +18,8 @@ public class DatabaseHandler {
 	public DatabaseHandler()  {
 		File file = new File("resources/WebStoreDB");
 		DB_PATH = file.getAbsolutePath();
-		initiateDatabase();
+		initiateTables();
+		setDummyData();
 	}
 	
 	public Connection openConnection() {
@@ -34,7 +35,7 @@ public class DatabaseHandler {
 		}
 	}
 
-	public void initiateDatabase() {
+	public void initiateTables() {
 		try {
 			Connection conn = openConnection();
 			Statement stat = conn.createStatement();
@@ -95,5 +96,17 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		}
 		return products;
+	}
+	
+	public void setDummyData()
+	{
+		insertProduct("Dominion", 399);
+		insertProduct("Football", 99);
+		insertProduct("Coca Cola", 10);
+		insertProduct("Headphones", 699);
+		insertProduct("Dart Board", 399);
+		insertProduct("Aircraft", 1000000);
+		insertProduct("Computer", 9001);
+		insertProduct("Jigsaw puzzle", 199);
 	}
 }
