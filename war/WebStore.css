@@ -1,0 +1,35 @@
+.TopPanel {
+  width: 100%%;
+  height: 50px;
+  background-color: blue;
+  border-color: black;
+  border: 2px;
+}
+
+.gwt-HorizontalPanel-Body {
+  width: 100px;
+  height: 400px;
+}
+
+.gwt-VerticalPanel-CornerPanel {
+  width: 10px;
+  height: 400px;
+  background-color: red;
+}
+
+.gwt-VerticalPanel-MidPanel {
+  width: 80px;
+  height: 400px;
+  background-color: maroon;
+}
+
+.ColorButton{
+	background-color: aqua;
+	color: red;
+}
+
+.IndexLabel{
+	width: 80px;
+	height:50px;
+	background-color: red;
+}
