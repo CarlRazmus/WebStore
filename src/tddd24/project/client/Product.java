@@ -16,10 +16,11 @@ public class Product implements Serializable{
 		category = "unknown";
 	}
 	
-	public Product(int id, String name, int price) {
+	public Product(int id, String name, int price, String category) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.category = category;
 	}
 	
 	public String getName() {

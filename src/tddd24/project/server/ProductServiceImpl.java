@@ -17,12 +17,17 @@ public class ProductServiceImpl extends RemoteServiceServlet implements ProductS
 	}
 	
 	@Override
-	public void addProduct(String name, int price) {
-		dbHandler.insertProduct(name, price);
+	public void addProduct(String name, int price, int category) {
+		dbHandler.addProduct(name, price, category);
 	}
 
 	@Override
 	public ArrayList<Product> getAll() {
 		return dbHandler.getAll();
+	}
+
+	@Override
+	public ArrayList<String> getAllCategorys() {
+		return dbHandler.getAllCategorys();
 	}
 }
