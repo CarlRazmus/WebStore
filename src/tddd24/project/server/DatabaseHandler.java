@@ -14,6 +14,7 @@ public class DatabaseHandler {
 
 	private String DB_PATH = "resurces/WebStoreDB";
 	private static final String DB_PRODUCT_TABLE = "products";
+	private static final String DB_CATEGORY_TABLE = "categories";
 
 	public DatabaseHandler()  {
 		File file = new File("resources/WebStoreDB");
@@ -39,11 +40,21 @@ public class DatabaseHandler {
 		try {
 			Connection conn = openConnection();
 			Statement stat = conn.createStatement();
+			
+			//Category Table
 			stat.executeUpdate("drop table if exists " + DB_PRODUCT_TABLE + ";");
 
 			stat.executeUpdate("create table "
 					+ DB_PRODUCT_TABLE
 					+ " (id int primary key, name varchar(20), price int);");
+			
+			//Product Table
+			stat.executeUpdate("drop table if exists " + DB_CATEGORY_TABLE + ";");
+
+			stat.executeUpdate("create table "
+					+ DB_CATEGORY_TABLE
+					+ " (id int primary key, name varchar(20);");
+
 			conn.close();
 
 		} catch (Exception e) {
@@ -65,6 +76,8 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	public void remove(int id) {
 		try {
@@ -99,7 +112,7 @@ public class DatabaseHandler {
 	}
 	
 	public void setDummyData()
-	{
+	{		
 		insertProduct("Dominion", 399);
 		insertProduct("Football", 99);
 		insertProduct("Coca Cola", 10);

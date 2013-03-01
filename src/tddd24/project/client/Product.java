@@ -6,12 +6,14 @@ public class Product implements Serializable{
 	private int id;
 	private String name;
 	private int price;
+	private String category;
 
 	public Product()
 	{
 		id = -1;
 		name = "unknown";
 		price = -1;
+		category = "unknown";
 	}
 	
 	public Product(int id, String name, int price) {
@@ -31,5 +33,8 @@ public class Product implements Serializable{
 	public int getId() {
 		return id;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
 }
