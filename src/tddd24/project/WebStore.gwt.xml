@@ -4,5 +4,6 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
 	<source path="client" />
+	<source path="widgets" />
 	<entry-point class="tddd24.project.client.WebStore"></entry-point>
 </module>
