@@ -1,31 +1,27 @@
 .TopPanel {
-  width: 100%%;
-  height: 50px;
-  background-color: blue;
-  border-color: black;
-  border: 2px;
+	width:100%;
+  	height: 50px;
+  	background-color: blue;
 }
 
-.gwt-HorizontalPanel-Body {
-  width: 100px;
-  height: 400px;
+.ProductLayout{
+	display: inline;
+	padding-right: 20px;
 }
 
-.gwt-VerticalPanel-CornerPanel {
-  width: 10px;
-  height: 400px;
-  background-color: red;
+.Body {
+  	width: 100%;
+  	height: 600px;
 }
 
-.gwt-VerticalPanel-MidPanel {
-  width: 80px;
-  height: 400px;
-  background-color: maroon;
+.CornerPanel {
+  	height: 1000px;
+  	background-color: red;
 }
 
-.ColorButton{
-	background-color: aqua;
-	color: red;
+.MainPanel {
+  	height: 1000px;
+  	background-color: lime;
 }
 
 .IndexLabel{
