@@ -3,3 +3,34 @@
 	width: 20px;
 	height: 20px;
 }
+.TopPanel {
+	width:100%;
+  	height: 50px;
+  	background-color: blue;
+}
+
+.ProductLayout{
+	display: inline;
+	padding-right: 20px;
+}
+
+.Body {
+  	width: 100%;
+  	height: 600px;
+}
+
+.CornerPanel {
+  	height: 1000px;
+  	background-color: red;
+}
+
+.MainPanel {
+  	height: 1000px;
+  	background-color: lime;
+}
+
+.IndexLabel{
+	width: 80px;
+	height:50px;
+	background-color: red;
+}

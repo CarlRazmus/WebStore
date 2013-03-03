@@ -47,6 +47,7 @@ public class DatabaseHandler {
 			stat.executeUpdate("drop table if exists " + DB_CATEGORY_TABLE
 					+ ";");
 
+
 			stat.executeUpdate("create table " + DB_CATEGORY_TABLE
 					+ " (id int, name varchar(20), primary key(id));");
 

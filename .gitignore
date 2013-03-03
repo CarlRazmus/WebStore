@@ -2,12 +2,11 @@
 *.classpath
 *.project
 .settings/
-.gwt/
 
 # Package Files #
 *.jar
 *.war
-.gitignore
+.gwt/
 
 # gwt caches and compiled units #
 war/gwt_bree/
