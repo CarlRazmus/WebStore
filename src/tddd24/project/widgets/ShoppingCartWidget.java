@@ -12,8 +12,7 @@ public class ShoppingCartWidget extends VerticalPanel {
 	private Label title;
 	private VerticalPanel shoppingCartArea;
 	private HorizontalPanel pricePanel;
-	private Label totalPriceLabel;
-	private Label totalPrice = new Label("0 kr");
+	private Label totalPrice = new Label("Total price: 0 kr");
 	private Label emptyLabel = new Label("Drop Products here to add them to your cart!");
 	
 	private ArrayList<Product> currentCart = new ArrayList<Product>();
@@ -22,12 +21,11 @@ public class ShoppingCartWidget extends VerticalPanel {
 	public ShoppingCartWidget() {
 		title = new Label("Your Shopping Cart: ");
 		shoppingCartArea = new VerticalPanel();
+		shoppingCartArea.addStyleName("shoppingCart");
 		emptyLabel.addStyleName("emptyCartLabel");
 		
 		//price panel
-		totalPriceLabel = new Label("Total Price: ");
 		pricePanel = new HorizontalPanel();
-		pricePanel.add(totalPriceLabel);
 		pricePanel.add(totalPrice);
 		
 		add(title);
@@ -54,7 +52,7 @@ public class ShoppingCartWidget extends VerticalPanel {
 				shoppingCartArea.add(name);
 				price += p.getPrice();
 			}
-			totalPrice.setText(Integer.toString(price) + " kr");
+			totalPrice.setText("Total price: " + Integer.toString(price) + " kr");
 		}
 	}
 }

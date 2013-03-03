@@ -3,7 +3,9 @@
 <module rename-to="WebStore">
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
+	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
 	<source path="client" />
 	<source path="widgets" />
+	<source path="controllers" />
 	<entry-point class="tddd24.project.client.WebStore"></entry-point>
 </module>

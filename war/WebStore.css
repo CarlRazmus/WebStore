@@ -1,54 +1,68 @@
-.somestyle{
+.somestyle {
 	display: inline-block;
 	margin: 15px;
-	border-color: silver;
-	border: 1px solid #BBBBBB;
+	border: 1px solid black;
 	padding: 5px;
+	background: white;
 }
 
 .TopPanel {
-	width:100%;
-  	height: 50px;
-  	background-color: blue;
+	width: 100%;
+	height: 100px;
+	background-color: teal;
+	border: 1px solid black;
 }
 
-.ProductLayout{
+.ProductLayout {
 	display: inline;
 	padding-right: 20px;
 }
 
 .Body {
-  	width: 100%;
-  	height: 600px;
+	width: 100%;
+	height: 600px;
 }
 
 .CornerPanel {
-  	height: 1000px;
-  	width: 100%;
-  	background-color: white;
+	height: 1000px;
+	width: 100%;
+	background-color: white;
 }
 
 .MainPanel {
-  	height: 1000px;
-  	background-color: white;
+	height: 1000px;
+	background-color: white;
+	background: -webkit-gradient(linear, left top, right bottom, from(silver),
+		to(white));
 }
 
-.IndexLabel{
+.IndexLabel {
 	width: 80px;
-	height:50px;
+	height: 50px;
 	background-color: red;
 }
 
-.emptyCartLabel{
-	padding: 20px;
+.emptyCartLabel {
+	padding: 10px;
 	font: italic;
+}
+
+.shoppingCart {
+	padding: 10px;
 	border: 1px solid silver;
 }
 
-.imageLabel{
+.imageLabel {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 14px;
 	color: silver;
+}
+
+.headerLabel {
+	font-size: 72pt;
+	font-style: italic;
+	font-weight: bold;
+	text-align: center;
 }

@@ -2,11 +2,15 @@ package tddd24.project.client;
 
 import java.util.ArrayList;
 
+import tddd24.project.controllers.ProductDragController;
+import tddd24.project.controllers.VerticalPanelDropController;
 import tddd24.project.widgets.ProductWidget;
 import tddd24.project.widgets.ShoppingCartWidget;
 
+import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -21,23 +25,27 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class WebStore implements EntryPoint {
 
 	private HorizontalPanel topPanel = new HorizontalPanel();
-
 	private HorizontalPanel bodyPanel = new HorizontalPanel();
-
 	private VerticalPanel categoryPanel = new VerticalPanel();
 	private Tree tree = new Tree(); // Tree that shows the categories
 	
 	private VerticalPanel shoppingCartPanel = new VerticalPanel();
 	private ShoppingCartWidget shoppingCart = new ShoppingCartWidget();
 	private FlowPanel mainPanel = new FlowPanel();
+	
+	private Label headerLabel = new Label("WebStore");
 
-	// private List itemList = new List();
-
+	//DND
+	private ProductDragController productDragController;
+	private VerticalPanelDropController dropController;
+	private Product draggedProduct;
 	private ProductServiceAsync productSvc;
 
 	@Override
 	public void onModuleLoad() {
-
+		headerLabel.setStyleName("headerLabel");
+		topPanel.add(headerLabel);
+		
 		bodyPanel.setBorderWidth(1);
 
 		topPanel.addStyleName("TopPanel");
@@ -68,7 +76,15 @@ public class WebStore implements EntryPoint {
 		bodyPanel.setCellWidth(categoryPanel, "10%");
 		bodyPanel.setCellWidth(mainPanel, "70%");
 		bodyPanel.setCellWidth(shoppingCartPanel, "20%");
-
+		
+		//Drag and drop initialization
+		productDragController = new ProductDragController(RootPanel.get("Home Page"), false, this);
+		dropController = new VerticalPanelDropController(shoppingCart, this);
+		productDragController.setBehaviorDragProxy(true);
+		productDragController.registerDropController(dropController);
+		
+		RootPanel.get("Home Page").getElement().getStyle().setPosition(Position.RELATIVE);
+		
 		getProducts(null);
 
 		RootPanel.get("Top Panel").add(topPanel);
@@ -78,9 +94,8 @@ public class WebStore implements EntryPoint {
 	private void UpdateMainList(ArrayList<Product> products) {
 		mainPanel.clear();
 		for (Product product : products) {
-			ProductWidget productWidget = new ProductWidget(product.getName(),
-					String.valueOf(product.getPrice()),
-					"Description test test test test test test test test test");
+			ProductWidget productWidget = new ProductWidget(product, this);
+			productWidget.setDraggable(productDragController);
 			mainPanel.add(productWidget);
 		}
 	}
@@ -134,6 +149,14 @@ public class WebStore implements EntryPoint {
 			}
 		};
 		productSvc.getProducts(filter, callback);
+	}
+
+	public void setCurrentProduct(Product product) {
+		draggedProduct = product;
+	}
+
+	public Product getDraggedProduct() {
+		return draggedProduct;
 	}
 
 }
