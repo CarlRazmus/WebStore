@@ -22,8 +22,8 @@ public class ProductServiceImpl extends RemoteServiceServlet implements ProductS
 	}
 
 	@Override
-	public ArrayList<Product> getAll() {
-		return dbHandler.getAll();
+	public ArrayList<Product> getProducts(String filter) {
+		return dbHandler.getProducts(filter);
 	}
 
 	@Override

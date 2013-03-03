@@ -47,7 +47,6 @@ public class DatabaseHandler {
 			stat.executeUpdate("drop table if exists " + DB_CATEGORY_TABLE
 					+ ";");
 
-
 			stat.executeUpdate("create table " + DB_CATEGORY_TABLE
 					+ " (id int, name varchar(20), primary key(id));");
 
@@ -110,7 +109,7 @@ public class DatabaseHandler {
 		}
 	}
 
-	public ArrayList<Product> getAll() {
+	public ArrayList<Product> getProducts(String filter) {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			Connection conn = openConnection();
@@ -118,7 +117,7 @@ public class DatabaseHandler {
 			Statement stat2 = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from "
 					+ DB_PRODUCT_TABLE + ";");
-			
+
 			int category_id;
 			while (rs.next()) {
 				category_id = rs.getInt("category_id");
@@ -127,9 +126,10 @@ public class DatabaseHandler {
 						+ ";");
 				categorySet.next();
 				String category = categorySet.getString("name");
-
-				products.add(new Product(rs.getRow(), rs.getString("name"),
-						rs.getInt("price"), category));
+				if (filter == null || category.equals(filter)) {
+					products.add(new Product(rs.getRow(), rs.getString("name"),
+							rs.getInt("price"), category));
+				}
 			}
 			rs.close();
 			conn.close();

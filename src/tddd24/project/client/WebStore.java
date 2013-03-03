@@ -6,17 +6,26 @@ import tddd24.project.widgets.ProductWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebStore implements EntryPoint {
 
 	private HorizontalPanel topPanel = new HorizontalPanel();
 
 	private HorizontalPanel bodyPanel = new HorizontalPanel();
-	private FlowPanel indexPanel = new FlowPanel();
+
+	private VerticalPanel categoryPanel = new VerticalPanel();
+	private Tree tree = new Tree(); // Tree that shows the categories
+	
 	private FlowPanel adPanel = new FlowPanel();
 	private FlowPanel mainPanel = new FlowPanel();
 
@@ -28,55 +37,100 @@ public class WebStore implements EntryPoint {
 	public void onModuleLoad() {
 
 		bodyPanel.setBorderWidth(1);
-		/*
-		 * bodyPanel.setWidth("50%"); bodyPanel.setHeight("400px");
-		 * mainPanel.setWidth("500px"); mainPanel.setHeight("600px");
-		 * indexPanel.setWidth("15%"); indexPanel.setHeight("600px");
-		 * adPanel.setWidth("15%"); adPanel.setHeight("600px");
-		 */
 
 		topPanel.addStyleName("TopPanel");
 		bodyPanel.addStyleName("Body");
-		indexPanel.addStyleName("CornerPanel");
+		categoryPanel.addStyleName("CornerPanel");
 		mainPanel.addStyleName("MainPanel");
 		adPanel.addStyleName("CornerPanel");
 
-		bodyPanel.add(indexPanel);
+		// add selection handler to tree and show categories
+		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
+			@Override
+			public void onSelection(SelectionEvent<TreeItem> event) {
+				TreeItem item = event.getSelectedItem();
+				String filter = ((Label)item.getWidget()).getText();
+				if (filter.equals("Alla Kategorier"))
+					filter = null;
+				getProducts(filter);
+			}
+		});
+		initiateCategories();
+		categoryPanel.add(tree);
+
+		bodyPanel.add(categoryPanel);
 		bodyPanel.add(mainPanel);
 		bodyPanel.add(adPanel);
 
-		bodyPanel.setCellWidth(indexPanel, "10%");
+		bodyPanel.setCellWidth(categoryPanel, "10%");
 		bodyPanel.setCellWidth(mainPanel, "80%");
 		bodyPanel.setCellWidth(adPanel, "10%");
 
-		UpdateMainList();
+		getProducts(null);
 
 		RootPanel.get("Top Panel").add(topPanel);
 		RootPanel.get("Home Page").add(bodyPanel);
 	}
 
-	private void UpdateMainList() {
+	private void UpdateMainList(ArrayList<Product> products) {
+		mainPanel.clear();
+		for (Product product : products) {
+			ProductWidget productWidget = new ProductWidget(product.getName(),
+					String.valueOf(product.getPrice()),
+					"Description test test test test test test test test test");
+			mainPanel.add(productWidget);
+		}
+	}
+
+	// gets categories from server and updates category list.
+	public void initiateCategories() {
+		if (productSvc == null) {
+			productSvc = GWT.create(ProductService.class);
+		}
+
+		AsyncCallback<ArrayList<String>> callback = new AsyncCallback<ArrayList<String>>() {
+			public void onFailure(Throwable caught) {
+
+			}
+
+			public void onSuccess(ArrayList<String> result) {
+				updateCategories(result);
+			}
+		};
+		productSvc.getAllCategorys(callback);
+	}
+
+	public void updateCategories(ArrayList<String> categories) {
+		tree.clear();
+		
+		TreeItem treeItem = new TreeItem(new Label("Alla Kategorier"));
+		for (String name : categories) {
+			treeItem.addItem(new Label(name));
+		}
+		tree.addItem(treeItem);
+	}
+
+	/**
+	 * Get products from sercer
+	 * 
+	 * @param filter
+	 *            after category or null if all products should be returned.
+	 */
+	private void getProducts(String filter) {
+		
 		if (productSvc == null) {
 			productSvc = GWT.create(ProductService.class);
 		}
 
 		AsyncCallback<ArrayList<Product>> callback = new AsyncCallback<ArrayList<Product>>() {
 			public void onFailure(Throwable caught) {
-
 			}
 
 			public void onSuccess(ArrayList<Product> result) {
-				mainPanel.clear();
-
-				for (Product product : result) {
-					ProductWidget productWidget = new ProductWidget(
-							product.getName(),
-							String.valueOf(product.getPrice()),
-							"Description test test test test test test test test test");
-					mainPanel.add(productWidget);
-				}
+				UpdateMainList(result);
 			}
 		};
-		productSvc.getAll(callback);
+		productSvc.getProducts(filter, callback);
 	}
+
 }
