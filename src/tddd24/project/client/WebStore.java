@@ -3,6 +3,7 @@ package tddd24.project.client;
 import java.util.ArrayList;
 
 import tddd24.project.widgets.ProductWidget;
+import tddd24.project.widgets.ShoppingCartWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -26,7 +27,8 @@ public class WebStore implements EntryPoint {
 	private VerticalPanel categoryPanel = new VerticalPanel();
 	private Tree tree = new Tree(); // Tree that shows the categories
 	
-	private FlowPanel adPanel = new FlowPanel();
+	private VerticalPanel shoppingCartPanel = new VerticalPanel();
+	private ShoppingCartWidget shoppingCart = new ShoppingCartWidget();
 	private FlowPanel mainPanel = new FlowPanel();
 
 	// private List itemList = new List();
@@ -42,7 +44,7 @@ public class WebStore implements EntryPoint {
 		bodyPanel.addStyleName("Body");
 		categoryPanel.addStyleName("CornerPanel");
 		mainPanel.addStyleName("MainPanel");
-		adPanel.addStyleName("CornerPanel");
+		shoppingCartPanel.addStyleName("CornerPanel");
 
 		// add selection handler to tree and show categories
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -57,14 +59,15 @@ public class WebStore implements EntryPoint {
 		});
 		initiateCategories();
 		categoryPanel.add(tree);
-
+		
+		shoppingCartPanel.add(shoppingCart);
 		bodyPanel.add(categoryPanel);
 		bodyPanel.add(mainPanel);
-		bodyPanel.add(adPanel);
+		bodyPanel.add(shoppingCartPanel);
 
 		bodyPanel.setCellWidth(categoryPanel, "10%");
-		bodyPanel.setCellWidth(mainPanel, "80%");
-		bodyPanel.setCellWidth(adPanel, "10%");
+		bodyPanel.setCellWidth(mainPanel, "70%");
+		bodyPanel.setCellWidth(shoppingCartPanel, "20%");
 
 		getProducts(null);
 

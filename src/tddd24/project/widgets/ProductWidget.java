@@ -15,7 +15,8 @@ public class ProductWidget extends DockPanel{
 		
 		Label imageLabel = new Label();
 		imageLabel.setSize("100px", "100px");
-		imageLabel.setText("Image");
+		imageLabel.setText("NO IMAGE");
+		imageLabel.addStyleName("imageLabel");
 		add(imageLabel, DockPanel.WEST);
 		setStylePrimaryName("somestyle");
 	}

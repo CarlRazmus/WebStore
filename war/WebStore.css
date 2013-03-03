@@ -25,7 +25,7 @@
 .CornerPanel {
   	height: 1000px;
   	width: 100%;
-  	background-color: red;
+  	background-color: white;
 }
 
 .MainPanel {
@@ -37,4 +37,18 @@
 	width: 80px;
 	height:50px;
 	background-color: red;
+}
+
+.emptyCartLabel{
+	padding: 20px;
+	font: italic;
+	border: 1px solid silver;
+}
+
+.imageLabel{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	color: silver;
 }
