@@ -88,7 +88,7 @@ public class WebStore implements EntryPoint {
 					nameLabel.setSize("200px", "20px");
 					nameLabel.setText(product.getName());
 					nameLabel.getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
-					p.
+
 					p.getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
 					
 					Label priceLabel = new Label();
@@ -122,5 +122,6 @@ public class WebStore implements EntryPoint {
 		};
 		productSvc.getAll(callback);
 	}
-	
 }
+	
+
