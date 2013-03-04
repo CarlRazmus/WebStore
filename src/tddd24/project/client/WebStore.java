@@ -7,7 +7,6 @@ import tddd24.project.controllers.VerticalPanelDropController;
 import tddd24.project.widgets.ProductWidget;
 import tddd24.project.widgets.ShoppingCartWidget;
 
-import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
