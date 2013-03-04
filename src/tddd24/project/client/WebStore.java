@@ -125,6 +125,7 @@ public class WebStore implements EntryPoint {
 			treeItem.addItem(new Label(name));
 		}
 		tree.addItem(treeItem);
+		treeItem.setState(true);
 	}
 
 	/**
