@@ -11,11 +11,13 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.layout.client.Layout;
-import com.google.gwt.layout.client.Layout.Alignment;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -44,7 +46,12 @@ public class WebStore implements EntryPoint {
 	
 	private Label userNameLabel = new Label("User Name:");
 	private Label passwordLabel = new Label("Password:");
-
+	private Button signInOutButton = new Button();
+	private ClickHandler signInListener;
+	private ClickHandler signOutListener;
+	private HandlerRegistration signOutHandlerReg;
+	private HandlerRegistration signInHandlerReg;
+	
 	//DND
 	private ProductDragController productDragController;
 	private VerticalPanelDropController dropController;
@@ -53,27 +60,54 @@ public class WebStore implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		//header layout
+		
+		//Header layout
 		headerLabel.setStyleName("headerLabel");
 		topPanel.add(headerLabel);
 		topPanel.add(userNameBox);
 		topPanel.add(passwordBox);
 		topPanel.add(userNameLabel);
 		topPanel.add(passwordLabel);
-//		userNameBox.setStyleName("userNameBox");
-//		userNameLabel.setStylePrimaryName("userNameLabel");
-//		passwordBox.setStyleName("passwordBox");
-//		passwordLabel.setStyleName("passwordLabel");
+		topPanel.add(signInOutButton);
+
 		topPanel.setWidgetTopBottom(headerLabel, 0, Unit.PX, 0, Unit.PX);
+		
 		topPanel.setWidgetRightWidth(userNameBox, 160.0, Unit.PX, 150.0, Unit.PX);
 		topPanel.setWidgetTopHeight(userNameBox, 20.0, Unit.PX, 30.0, Unit.PX);
+		
 		topPanel.setWidgetRightWidth(passwordBox, 0.0, Unit.PX, 150.0, Unit.PX);
 		topPanel.setWidgetTopHeight(passwordBox, 20.0, Unit.PX, 30.0, Unit.PX);
+		
 		topPanel.setWidgetRightWidth(userNameLabel, 160.0, Unit.PX, 147.0, Unit.PX);
 		topPanel.setWidgetTopHeight(userNameLabel, 0.0, Unit.PX, 30.0, Unit.PX);
+		
 		topPanel.setWidgetRightWidth(passwordLabel, 0.0, Unit.PX, 147.0, Unit.PX);
 		topPanel.setWidgetTopHeight(passwordLabel, 0.0, Unit.PX, 30.0, Unit.PX);
 		
+		topPanel.setWidgetRightWidth(signInOutButton, 110.0, Unit.PX, 100.0, Unit.PX);
+		topPanel.setWidgetTopHeight(signInOutButton, 60.0, Unit.PX, 30.0, Unit.PX);
+				
+		
+		//Sign in/out button handling
+		signInListener = new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String userName = userNameBox.getText();
+				String password = passwordBox.getText();
+				signIn(userName, password);
+			}
+		};
+		
+		signOutListener = new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				changeToSignedOutUI();
+			}
+		};
+		
+		changeToSignedOutUI();
 		
 		bodyPanel.setBorderWidth(1);
 
@@ -94,6 +128,8 @@ public class WebStore implements EntryPoint {
 				getProducts(filter);
 			}
 		});
+		
+		//Category Layout
 		initiateCategories();
 		categoryPanel.add(tree);
 		
@@ -188,5 +224,52 @@ public class WebStore implements EntryPoint {
 	public Product getDraggedProduct() {
 		return draggedProduct;
 	}
+	
+	protected void signIn(String userName, String password) {
+		if (productSvc == null) {
+			productSvc = GWT.create(ProductService.class);
+		}
 
+		AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+			public void onFailure(Throwable caught) {
+			}
+
+			public void onSuccess(Boolean valid) {
+				if(valid)
+					changeToSignedInUI();
+			}
+		};
+		productSvc.verifyAccount(userName, password, callback);
+	}
+	
+	private void changeToSignedInUI()
+	{
+		//Hide sign in elements
+		userNameBox.setVisible(false);
+		userNameLabel.setVisible(false);
+		passwordBox.setVisible(false);
+		passwordLabel.setVisible(false);
+		
+		//Change to sign out elements
+		signInOutButton.setText("Sign Out");
+		if(signInHandlerReg != null)
+			signInHandlerReg.removeHandler();
+		signOutHandlerReg = signInOutButton.addClickHandler(signOutListener);
+		
+	}
+	
+	protected void changeToSignedOutUI() {
+		
+		//Show sign in elements
+		userNameBox.setVisible(true);
+		userNameLabel.setVisible(true);
+		passwordBox.setVisible(true);
+		passwordLabel.setVisible(true);
+		
+		//change to sign in elements
+		signInOutButton.setText("Sign In");
+		if(signOutHandlerReg != null)
+			signOutHandlerReg.removeHandler();
+		signInHandlerReg = signInOutButton.addClickHandler(signInListener);
+	}
 }

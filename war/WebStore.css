@@ -66,28 +66,5 @@
 	font-style: italic;
 	font-weight: bold;
 	text-align: center;
-}
-
-.userNameBox {
-	top: 30px;
-	right: 160px;
-	width: 150px;
-	height: 20px;
-}
-
-.userNameLabel {
-	top: 0px;
-	right: 307px;
-}
-
-.passwordBox {
-	top: 30px;
-	right: 0px;
-	width: 160px;
-	height: 20px;
-}
-
-.passwordLabel {
-	top: 0px;
-	right: 157px;
+	margin-top: -15px;
 }

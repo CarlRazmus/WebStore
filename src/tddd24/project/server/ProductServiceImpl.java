@@ -30,4 +30,14 @@ public class ProductServiceImpl extends RemoteServiceServlet implements ProductS
 	public ArrayList<String> getAllCategorys() {
 		return dbHandler.getAllCategorys();
 	}
+
+	@Override
+	public void addAccount(String userName, String password) {
+		dbHandler.addAccount(userName, password);
+	}
+	
+	@Override
+	public boolean verifyAccount(String userName, String password) {
+		return dbHandler.verifyAccount(userName, password);
+	}
 }

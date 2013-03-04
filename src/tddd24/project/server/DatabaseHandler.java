@@ -17,6 +17,7 @@ public class DatabaseHandler {
 	private String DB_PATH = "resurces/WebStoreDB";
 	private static final String DB_PRODUCT_TABLE = "products";
 	private static final String DB_CATEGORY_TABLE = "categories";
+	private static final String DB_ACCOUNT_TABLE = "accounts";
 
 	public DatabaseHandler() {
 		File file = new File("resources/WebStoreDB");
@@ -59,6 +60,12 @@ public class DatabaseHandler {
 					+ "foreign key(category_id) references "
 					+ DB_CATEGORY_TABLE + " (id)," + "primary key(id));");
 
+			// Account Table
+			stat.executeUpdate("drop table if exists " + DB_ACCOUNT_TABLE + ";");
+
+			stat.executeUpdate("create table "
+					+ DB_ACCOUNT_TABLE
+					+ " (username varchar(20), password varchar(30), primary key(username));");
 			conn.close();
 
 		} catch (Exception e) {
@@ -89,6 +96,20 @@ public class DatabaseHandler {
 			PreparedStatement prep = conn.prepareStatement("insert into "
 					+ DB_CATEGORY_TABLE + " (name) values (?)");
 			prep.setString(1, name);
+			prep.execute();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addAccount(String userName, String password) {
+		try {
+			Connection conn = openConnection();
+			PreparedStatement prep = conn.prepareStatement("insert into "
+					+ DB_ACCOUNT_TABLE + " (username, password) values (?, ?)");
+			prep.setString(1, userName);
+			prep.setString(2, password);
 			prep.execute();
 			conn.close();
 		} catch (Exception e) {
@@ -157,6 +178,27 @@ public class DatabaseHandler {
 		return categorys;
 	}
 
+	public boolean verifyAccount(String userName, String password) {
+		try {
+			Connection conn = openConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select * from "
+					+ DB_ACCOUNT_TABLE + " where username = \"" + userName
+					+ "\" and password = \"" + password + "\";");
+			if(rs.next())
+			{
+				rs.close();
+				conn.close();
+				return true;
+			}
+			rs.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public void setDummyData() {
 		addCategory("Sports");
 		addCategory("Games");
@@ -171,5 +213,8 @@ public class DatabaseHandler {
 		addProduct("Aircraft", 1000000, 4);
 		addProduct("Computer", 9001, 3);
 		addProduct("Jigsaw puzzle", 199, 2);
+		
+		addAccount("admin", "admin");
 	}
+
 }

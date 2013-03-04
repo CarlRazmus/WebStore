@@ -9,4 +9,8 @@ public interface ProductServiceAsync {
 			AsyncCallback<Void> callback);
 	void getProducts(String filter, AsyncCallback<ArrayList<Product>> callback);
 	void getAllCategorys(AsyncCallback<ArrayList<String>> callback);
+	void addAccount(String userName, String password,
+			AsyncCallback<Void> callback);
+	void verifyAccount(String userName, String password,
+			AsyncCallback<Boolean> callback);
 }

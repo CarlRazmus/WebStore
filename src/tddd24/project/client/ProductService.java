@@ -10,4 +10,6 @@ public interface ProductService extends RemoteService{
 	void addProduct(String name, int price, int category);
 	ArrayList<Product> getProducts(String filter);
 	ArrayList<String> getAllCategorys();
+	void addAccount(String userName, String password);
+	boolean verifyAccount(String userName, String password);
 }
