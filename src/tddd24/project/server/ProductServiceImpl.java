@@ -56,4 +56,9 @@ public class ProductServiceImpl extends RemoteServiceServlet implements
 		}
 		return true;
 	}
+
+	@Override
+	public void addInventory(int productId, int amount) {
+		dbHandler.addInventory(productId, amount);
+	}
 }

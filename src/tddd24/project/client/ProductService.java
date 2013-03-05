@@ -11,6 +11,7 @@ public interface ProductService extends RemoteService{
 	ArrayList<Product> getProducts(String filter);
 	ArrayList<String> getAllCategorys();
 	void addAccount(String userName, String password);
+	void addInventory(int productId, int amount);
 	
 	boolean verifyAccount(String userName, String password);
 	

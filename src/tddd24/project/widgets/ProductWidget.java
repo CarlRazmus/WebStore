@@ -82,5 +82,8 @@ public class ProductWidget extends DockPanel {
 	public void setDraggable(ProductDragController productDragController) {
 		productDragController.makeDraggable(nameLabel);
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> abe4991a3268e710a9ecf6936015e3d69e671e43
 }
