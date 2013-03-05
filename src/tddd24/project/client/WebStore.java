@@ -185,7 +185,6 @@ public class WebStore implements EntryPoint {
 		button.addClickHandler(new ClickHandler() {
 	          public void onClick(ClickEvent event) {
 	              //go to payment accepted view
-	        	  confirmOrder(order);
 	          }
 	      });
 		

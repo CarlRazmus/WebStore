@@ -20,7 +20,6 @@ public class ProductMainPanelUI {
 		mainPanel.add(costPreviewLabel);
 		costPreviewLabel.setText(String.valueOf(AddProducts(mainPanel, products)));
 		
-		
 	}
 	
 	static int AddProducts(FlowPanel mainPanel, ArrayList<Product> products)
@@ -29,6 +28,7 @@ public class ProductMainPanelUI {
 		mainPanel.clear();
 		for (Product product : products) {
 			ProductWidget productWidget = new ProductWidget(product);
+			productWidget.showAmount();
 			mainPanel.add(productWidget);
 			cost += product.getPrice() * product.getInCurrentCart();
 		}
