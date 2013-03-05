@@ -13,46 +13,56 @@ public class ShoppingCartWidget extends VerticalPanel {
 	private VerticalPanel shoppingCartArea;
 	private HorizontalPanel pricePanel;
 	private Label totalPrice = new Label("Total price: 0 kr");
-	private Label emptyLabel = new Label("Drop Products here to add them to your cart!");
-	
+	private Label emptyLabel = new Label(
+			"Drop Products here to add them to your cart!");
+
 	private ArrayList<Product> currentCart = new ArrayList<Product>();
 
-	
 	public ShoppingCartWidget() {
 		title = new Label("Your Shopping Cart: ");
 		shoppingCartArea = new VerticalPanel();
 		shoppingCartArea.addStyleName("shoppingCart");
 		emptyLabel.addStyleName("emptyCartLabel");
-		
-		//price panel
+
+		// price panel
 		pricePanel = new HorizontalPanel();
 		pricePanel.add(totalPrice);
-		
+
 		add(title);
 		add(shoppingCartArea);
 		add(pricePanel);
-		
+
 		updateCart();
 	}
-	
-	public void addProductToCart(Product product){
-		currentCart.add(product);
-		updateCart();
-	}
-	
-	private void updateCart(){
-		shoppingCartArea.clear();
-		if(currentCart.size() == 0)
-		{
-			shoppingCartArea.add(emptyLabel);
-		}else{
-			int price = 0;
-			for(Product p : currentCart){
-				Label name = new Label(p.getName());
-				shoppingCartArea.add(name);
-				price += p.getPrice();
+
+	public void addProductToCart(Product product) {
+		for (Product p : currentCart) {
+			if (p.getId() == product.getId()) {
+				p.addedToCart();
+				updateCart();
+				return;
 			}
-			totalPrice.setText("Total price: " + Integer.toString(price) + " kr");
+		}
+		Product newProduct = new Product(product.getId(), product.getName(), product
+				.getPrice(), product.getCategory(), product.getInventory());
+		newProduct.addedToCart();
+		currentCart.add(newProduct);
+		updateCart();
+	}
+
+	private void updateCart() {
+		shoppingCartArea.clear();
+		if (currentCart.size() == 0) {
+			shoppingCartArea.add(emptyLabel);
+		} else {
+			int price = 0;
+			for (Product p : currentCart) {
+				Label name = new Label(p.getName() + " x " + p.getInCurrentCart());
+				shoppingCartArea.add(name);
+				price += p.getPrice() * p.getInCurrentCart();
+			}
+			totalPrice.setText("Total price: " + Integer.toString(price)
+					+ " kr");
 		}
 	}
 }

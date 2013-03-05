@@ -69,6 +69,10 @@
 	margin-top: -15px;
 }
 
+.inventoryLabel{
+	margin-left: 50px;
+}
+
 .userNameBox {
 	top: 30px;
 	right: 160px;
@@ -92,3 +96,4 @@
 	top: 0px;
 	right: 157px;
 }
+
