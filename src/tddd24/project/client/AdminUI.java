@@ -7,9 +7,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -17,6 +19,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class AdminUI extends VerticalPanel {
 
 	private ListBox listBox;
+	private FlexTable table;
+	private boolean initiated = false;
 	
 	public AdminUI(FlowPanel mainPanel, WebStore webStore) {
 
@@ -33,16 +37,41 @@ public class AdminUI extends VerticalPanel {
 			}
 
 			public void onSuccess(ArrayList<Product> result) {
-				fillListBox(result);
+				if(!initiated){
+					fillListBox(result);
+					initiated  = true;
+				}
+				updateTable(result);
 			}
 		};
 
 		productSvc.getProducts(null, callback);
 	}
 
+	protected void updateTable(ArrayList<Product> products) {
+		//Table
+		table.clear();
+		Label productTableLabel = new Label("Product");
+		Label inventoryTableLabel = new Label("Inventory");
+		
+		productTableLabel.setStyleName("productTableLabel");
+		inventoryTableLabel.setStyleName("inventoryTableLabel");
+		table.setWidget(0, 0, productTableLabel);
+		table.setWidget(0, 1, inventoryTableLabel);
+		
+		int row = 1;
+		for(Product p : products){
+			table.setWidget(row, 0, new Label(p.getName()));
+			table.setWidget(row, 1, new Label(Integer.toString(p.getInventory())));
+			row++;
+		}
+	}
+
 	private void fillListBox(ArrayList<Product> products)
 	{
 		listBox = new ListBox();
+		table = new FlexTable();
+		
 		final TextBox amountBox = new TextBox();
 		Button sendButton = new Button("Update Inventory");
 		
@@ -51,6 +80,8 @@ public class AdminUI extends VerticalPanel {
 		addInventoryPanel.add(amountBox);
 		addInventoryPanel.add(sendButton);
 		this.add(addInventoryPanel);
+		this.add(table);
+		
 		
 		//add products to listbox
 		for(Product p : products)
@@ -82,7 +113,7 @@ public class AdminUI extends VerticalPanel {
 			}
 
 			public void onSuccess(Void result) {
-				
+				getProducts();
 			}
 		};
 
