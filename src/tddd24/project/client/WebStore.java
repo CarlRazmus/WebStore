@@ -123,7 +123,7 @@ public class WebStore implements EntryPoint {
 		Label previewLabel = new Label("Products Preview");
 		previewLabel.getElement().getStyle().setPadding(20, Style.Unit.PX);
 		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		Button button = new Button("Go to Payment");
+		Button button = new Button("Confirm Order");
 		button.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
 		button.addClickHandler(new ClickHandler() {
 	          public void onClick(ClickEvent event) {
