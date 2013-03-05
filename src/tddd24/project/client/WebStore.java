@@ -12,6 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.VerticalAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -21,6 +22,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -172,7 +176,10 @@ public class WebStore implements EntryPoint {
 	private void Checkout()
 	{
 		mainPanel.clear();
+		mainPanel.setWidth("100%");
 		VerticalPanel mainPanelUI = new VerticalPanel();
+		//mainPanelUI.setWidth("100%");
+		mainPanelUI.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		FlowPanel productPreviewPanel = new FlowPanel();
 		final ArrayList<Product> order = shoppingCart.GetProducts();
 		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, order);
@@ -181,7 +188,7 @@ public class WebStore implements EntryPoint {
 		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);// .getElement().getStyle().setV
 		Button button = new Button("Go to Payment");
 		button.getElement().getStyle().setPadding(20, Style.Unit.PX);
-		
+
 		button.addClickHandler(new ClickHandler() {
 	          public void onClick(ClickEvent event) {
 	              //go to payment accepted view
@@ -191,9 +198,58 @@ public class WebStore implements EntryPoint {
 		
 		mainPanelUI.add(previewLabel);
 		mainPanelUI.add(productPreviewPanel);
-		mainPanelUI.add(button);
-		mainPanel.add(mainPanelUI);
 		
+		/* User Fill-In information fields  */ 
+		
+		HorizontalPanel panel = new HorizontalPanel();
+		Label label = new Label("First name");
+		TextBox textBox = new TextBox();
+		label.setStyleName("PaymentDetailsLabel");
+		panel.add(label);
+		panel.add(textBox);
+		mainPanelUI.add(panel);
+		
+
+		HorizontalPanel panel2 = new HorizontalPanel();
+		Label label2 = new Label("Last name");
+		TextBox textBox2 = new TextBox();
+		label2.setStyleName("PaymentDetailsLabel");
+		panel2.add(label2);
+		panel2.add(textBox2);
+		mainPanelUI.add(panel2);
+		
+
+		HorizontalPanel panel3 = new HorizontalPanel();
+		Label label3 = new Label("Phone Number");
+		TextBox textBox3 = new TextBox();
+		label3.setStyleName("PaymentDetailsLabel");
+		panel3.add(label3);
+		panel3.add(textBox3);
+		mainPanelUI.add(panel3);
+		
+
+		HorizontalPanel panel4 = new HorizontalPanel();
+		Label label4 = new Label("Adress");
+		TextBox textBox4 = new TextBox();
+		label4.setStyleName("PaymentDetailsLabel");
+		panel4.add(label4);
+		panel4.add(textBox4);
+		mainPanelUI.add(panel4);
+		
+
+		HorizontalPanel panel5 = new HorizontalPanel();
+		Label label5 = new Label("Zip Code");
+		TextBox textBox5 = new TextBox();
+		label5.setStyleName("PaymentDetailsLabel");
+		panel5.add(label5);
+		panel5.add(textBox5);
+		mainPanelUI.add(panel5);
+
+		//mainPanelUI.setCellHorizontalAlignment(productPreviewPanel, Style.VerticalAlign.MIDDLE);
+		
+		
+		mainPanelUI.add(button);
+		mainPanel.add(mainPanelUI);		
 	}
 
 	
