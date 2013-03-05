@@ -7,6 +7,8 @@ public class Product implements Serializable{
 	private String name;
 	private int price;
 	private String category;
+	private int inventory;
+	private int inCurrentCart = 0;
 
 	public Product()
 	{
@@ -14,13 +16,15 @@ public class Product implements Serializable{
 		name = "unknown";
 		price = -1;
 		category = "unknown";
+		inventory = 0;
 	}
 	
-	public Product(int id, String name, int price, String category) {
+	public Product(int id, String name, int price, String category, int inventory) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.category = category;
+		this.inventory = inventory;
 	}
 	
 	public String getName() {
@@ -37,5 +41,24 @@ public class Product implements Serializable{
 
 	public String getCategory() {
 		return category;
+	}
+
+	public int getInventory() {
+		return inventory;
+	}
+
+	public void addedToCart(){
+		inCurrentCart += 1;
+	}
+	
+	public int getInCurrentCart() {
+		return inCurrentCart;
+	}
+
+	public int removedFromCart() {
+		inCurrentCart -= 1;
+		if(inCurrentCart < 0)
+			inCurrentCart = 0;
+		return inCurrentCart;
 	}
 }
