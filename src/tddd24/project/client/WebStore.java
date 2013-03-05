@@ -131,7 +131,6 @@ public class WebStore implements EntryPoint {
 	          }
 	      });
 		
-		
 		mainPanelUI.add(previewLabel);
 		mainPanelUI.add(productPreviewPanel);
 		
