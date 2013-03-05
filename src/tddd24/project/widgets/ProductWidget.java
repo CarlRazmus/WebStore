@@ -43,6 +43,25 @@ public class ProductWidget extends DockPanel {
 		});
 	}
 
+	public ProductWidget(final Product product) {
+		
+		String name = product.getName();
+		String price = Integer.toString(product.getPrice());
+		nameLabel = new Label(name);
+		add(nameLabel, DockPanel.NORTH);
+		add(new Label(price + " kr"), DockPanel.SOUTH);
+		Label descriptionLabel = new Label("No description");
+		descriptionLabel.setWidth("100px");
+		add(descriptionLabel, DockPanel.EAST);
+
+		Label imageLabel = new Label();
+		imageLabel.setSize("100px", "100px");
+		imageLabel.setText("NO IMAGE");
+		imageLabel.addStyleName("imageLabel");
+		add(imageLabel, DockPanel.WEST);
+		setStylePrimaryName("somestyle");
+	}
+	
 	public void setDraggable(ProductDragController productDragController) {
 		productDragController.makeDraggable(nameLabel);
 	}

@@ -9,11 +9,17 @@ import tddd24.project.widgets.ShoppingCartWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -27,6 +33,7 @@ public class WebStore implements EntryPoint {
 	private HorizontalPanel bodyPanel = new HorizontalPanel();
 	private VerticalPanel categoryPanel = new VerticalPanel();
 	private Tree tree = new Tree(); // Tree that shows the categories
+	private Button checkoutShoppingCartButton = new Button("Checkout");
 	
 	private VerticalPanel shoppingCartPanel = new VerticalPanel();
 	private ShoppingCartWidget shoppingCart = new ShoppingCartWidget();
@@ -52,6 +59,13 @@ public class WebStore implements EntryPoint {
 		categoryPanel.addStyleName("CornerPanel");
 		mainPanel.addStyleName("MainPanel");
 		shoppingCartPanel.addStyleName("CornerPanel");
+		
+		checkoutShoppingCartButton.addClickHandler(new ClickHandler() {
+	          public void onClick(ClickEvent event) {
+	              Checkout();
+	          }
+	      });
+		shoppingCart.add(checkoutShoppingCartButton);
 
 		// add selection handler to tree and show categories
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -68,8 +82,11 @@ public class WebStore implements EntryPoint {
 		categoryPanel.add(tree);
 		
 		shoppingCartPanel.add(shoppingCart);
+		bodyPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		bodyPanel.add(categoryPanel);
+		bodyPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		bodyPanel.add(mainPanel);
+		bodyPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		bodyPanel.add(shoppingCartPanel);
 
 		bodyPanel.setCellWidth(categoryPanel, "10%");
@@ -89,14 +106,39 @@ public class WebStore implements EntryPoint {
 		RootPanel.get("Top Panel").add(topPanel);
 		RootPanel.get("Home Page").add(bodyPanel);
 	}
+	
+	private void Checkout()
+	{
+		mainPanel.clear();
+		VerticalPanel mainPanelUI = new VerticalPanel();
+		FlowPanel productPreviewPanel = new FlowPanel();
+		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, shoppingCart.GetProducts());
+		Label previewLabel = new Label("Products Preview");
+		previewLabel.getElement().getStyle().setPadding(10, Style.Unit.PX);
+		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);// .getElement().getStyle().setV
+		Button button = new Button("Go to Payment");
+		button.getElement().getStyle().setPadding(20, Style.Unit.PX);
+		button.addClickHandler(new ClickHandler() {
+	          public void onClick(ClickEvent event) {
+	              //go to payment accepted view
+	          }
+	      });
+		
+		
+		mainPanelUI.add(previewLabel);
+		mainPanelUI.add(productPreviewPanel);
+		mainPanelUI.add(button);
+		mainPanel.add(mainPanelUI);
+		
+	}
 
-	private void UpdateMainList(ArrayList<Product> products) {
+	public void UpdateMainList(ArrayList<Product> products) {
 		mainPanel.clear();
 		for (Product product : products) {
 			ProductWidget productWidget = new ProductWidget(product, this);
 			productWidget.setDraggable(productDragController);
 			mainPanel.add(productWidget);
-		}
+		} 
 	}
 
 	// gets categories from server and updates category list.
