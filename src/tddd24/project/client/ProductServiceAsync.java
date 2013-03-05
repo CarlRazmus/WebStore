@@ -14,4 +14,5 @@ public interface ProductServiceAsync {
 	void verifyAccount(String userName, String password,
 			AsyncCallback<Boolean> callback);
 	void confirmOrder(ArrayList<Product> order, AsyncCallback<Boolean> callback);
+	void addInventory(int productId, int amount, AsyncCallback<Void> callback);
 }
