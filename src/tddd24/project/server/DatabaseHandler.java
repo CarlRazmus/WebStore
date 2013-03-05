@@ -122,9 +122,9 @@ public class DatabaseHandler {
 			}
 
 			PreparedStatement prep = conn.prepareStatement("update "
-					+ DB_PRODUCT_TABLE + " set inventory = " + inventoryChange
-					+ " where rowid = " + productId);
+					+ DB_PRODUCT_TABLE + " set inventory = ? where rowid = ?");
 			prep.setInt(1, inventoryChange);
+			prep.setInt(2, productId);
 			prep.execute();
 			rs.close();
 			conn.close();

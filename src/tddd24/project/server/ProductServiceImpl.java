@@ -45,14 +45,14 @@ public class ProductServiceImpl extends RemoteServiceServlet implements
 	public boolean confirmOrder(ArrayList<Product> order) {
 		//Verify
 		for (Product p : order) {
-			if (!dbHandler.verifyInventory(p.getId(), p.getInCurrentCart())) {
+			if (!dbHandler.verifyInventory(p.getId(), -p.getInCurrentCart())) {
 				return false;
 			}
 		}
 		
 		//Change inventory
 		for (Product p : order) {
-			dbHandler.addInventory(p.getId(), p.getInCurrentCart());
+			dbHandler.addInventory(p.getId(), -p.getInCurrentCart());
 		}
 		return true;
 	}

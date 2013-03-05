@@ -30,10 +30,8 @@ public class ProductMainPanelUI {
 		for (Product product : products) {
 			ProductWidget productWidget = new ProductWidget(product);
 			mainPanel.add(productWidget);
-			cost += product.getPrice();
+			cost += product.getPrice() * product.getInCurrentCart();
 		}
 		return cost;
 	}
-
-
 }

@@ -54,4 +54,11 @@ public class Product implements Serializable{
 	public int getInCurrentCart() {
 		return inCurrentCart;
 	}
+
+	public int removedFromCart() {
+		inCurrentCart -= 1;
+		if(inCurrentCart < 0)
+			inCurrentCart = 0;
+		return inCurrentCart;
+	}
 }

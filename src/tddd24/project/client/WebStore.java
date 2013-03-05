@@ -174,15 +174,18 @@ public class WebStore implements EntryPoint {
 		mainPanel.clear();
 		VerticalPanel mainPanelUI = new VerticalPanel();
 		FlowPanel productPreviewPanel = new FlowPanel();
-		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, shoppingCart.GetProducts());
+		final ArrayList<Product> order = shoppingCart.GetProducts();
+		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, order);
 		Label previewLabel = new Label("Products Preview");
 		previewLabel.getElement().getStyle().setPadding(10, Style.Unit.PX);
 		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);// .getElement().getStyle().setV
 		Button button = new Button("Go to Payment");
 		button.getElement().getStyle().setPadding(20, Style.Unit.PX);
+		
 		button.addClickHandler(new ClickHandler() {
 	          public void onClick(ClickEvent event) {
 	              //go to payment accepted view
+	        	  confirmOrder(order);
 	          }
 	      });
 		
@@ -193,6 +196,8 @@ public class WebStore implements EntryPoint {
 		mainPanel.add(mainPanelUI);
 		
 	}
+
+	
 
 	public void UpdateMainList(ArrayList<Product> products) {
 		mainPanel.clear();
@@ -309,5 +314,24 @@ public class WebStore implements EntryPoint {
 		if(signOutHandlerReg != null)
 			signOutHandlerReg.removeHandler();
 		signInHandlerReg = signInOutButton.addClickHandler(signInListener);
+	}
+	
+	protected void confirmOrder(ArrayList<Product> order) {
+		if (productSvc == null) {
+			productSvc = GWT.create(ProductService.class);
+		}
+
+		AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+			public void onFailure(Throwable caught) {
+			}
+
+			public void onSuccess(Boolean valid) {
+				if(valid)
+					headerLabel.setText("success");
+				else
+					headerLabel.setText("fail");
+			}
+		};
+		productSvc.confirmOrder(order, callback);
 	}
 }
