@@ -20,7 +20,11 @@ public class CheckoutUI extends VerticalPanel{
 		
 		this.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		FlowPanel productPreviewPanel = new FlowPanel();
-		final ArrayList<Product> order = webStore.getShoppingCart().GetProducts();
+		
+		final ArrayList<Product> order = new ArrayList<Product>();
+		for(Product p : webStore.getShoppingCart().GetProducts()){
+			order.add(p);
+		}
 		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, order);
 		Label previewLabel = new Label("Products Preview");
 		previewLabel.getElement().getStyle().setPadding(10, Style.Unit.PX);
