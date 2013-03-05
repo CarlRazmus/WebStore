@@ -86,27 +86,11 @@
 	margin-left: 50px;
 }
 
-.userNameBox {
-	top: 30px;
-	right: 160px;
-	width: 150px;
-	height: 20px;
+.productTableLabel{
+	font-weight: bold;
 }
 
-.userNameLabel {
-	top: 0px;
-	right: 307px;
-}
-
-.passwordBox {
-	top: 30px;
-	right: 0px;
-	width: 160px;
-	height: 20px;
-}
-
-.passwordLabel {
-	top: 0px;
-	right: 157px;
+.inventoryTableLabel{
+	font-weight: bold;
 }
 
