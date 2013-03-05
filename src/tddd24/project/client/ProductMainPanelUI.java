@@ -27,7 +27,6 @@ public class ProductMainPanelUI {
 		mainPanel.clear();
 		for (Product product : products) {
 			ProductWidget productWidget = new ProductWidget(product);
-			productWidget.showAmount();
 			mainPanel.add(productWidget);
 			cost += product.getPrice() * product.getInCurrentCart();
 		}

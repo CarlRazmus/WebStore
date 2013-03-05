@@ -83,8 +83,4 @@ public class ProductWidget extends DockPanel {
 		productDragController.makeDraggable(nameLabel);
 	}
 
-	public void showAmount() {
-
-	}
-
 }

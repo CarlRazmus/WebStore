@@ -10,6 +10,7 @@ import tddd24.project.widgets.ShoppingCartWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.VerticalAlign;
@@ -185,13 +186,13 @@ public class WebStore implements EntryPoint {
 		ProductMainPanelUI.SetFlowPanelPreviewData(productPreviewPanel, order);
 		Label previewLabel = new Label("Products Preview");
 		previewLabel.getElement().getStyle().setPadding(10, Style.Unit.PX);
-		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);// .getElement().getStyle().setV
+		previewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		Button button = new Button("Go to Payment");
 		button.getElement().getStyle().setPadding(20, Style.Unit.PX);
 
 		button.addClickHandler(new ClickHandler() {
 	          public void onClick(ClickEvent event) {
-	              //go to payment accepted view
+	            	confirmOrder(order);
 	          }
 	      });
 		
@@ -381,9 +382,24 @@ public class WebStore implements EntryPoint {
 
 			public void onSuccess(Boolean valid) {
 				if(valid)
-					headerLabel.setText("success");
+				{
+					mainPanel.clear();
+					Label text = new Label("Thank you for your purchase");
+					text.setSize("400px", "200px");
+					text.getElement().getStyle().setVerticalAlign(Style.VerticalAlign.MIDDLE);
+					text.getElement().getStyle().setMarginTop(200, Unit.PX);
+					mainPanel.add(text);
+				}
 				else
-					headerLabel.setText("fail");
+				{
+					mainPanel.clear();
+					mainPanel.clear();
+					Label text = new Label("Purchase unsuccessful, check that the wares are currently in stock!");
+					text.setSize("400px", "200px");
+					text.getElement().getStyle().setVerticalAlign(Style.VerticalAlign.MIDDLE);
+					text.getElement().getStyle().setMarginTop(200, Unit.PX);
+					mainPanel.add(text);
+				}	
 			}
 		};
 		productSvc.confirmOrder(order, callback);
