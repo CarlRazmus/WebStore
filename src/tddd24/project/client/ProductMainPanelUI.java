@@ -19,8 +19,6 @@ public class ProductMainPanelUI {
 		costPreviewLabel.getElement().getStyle().setPaddingTop(10, Style.Unit.PX);
 		mainPanel.add(costPreviewLabel);
 		costPreviewLabel.setText(String.valueOf(AddProducts(mainPanel, products)));
-		
-		
 	}
 	
 	static int AddProducts(FlowPanel mainPanel, ArrayList<Product> products)

@@ -42,6 +42,13 @@
 	background-color: red;
 }
 
+.PaymentDetailsLabel{
+	width: 90px;
+	vertical-align: middle;
+	margin-top: 6px;
+	
+}
+
 .emptyCartLabel {
 	padding: 10px;
 	font: italic;
