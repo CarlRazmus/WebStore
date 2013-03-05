@@ -17,6 +17,10 @@ public class ShoppingCartWidget extends VerticalPanel {
 	
 	private ArrayList<Product> currentCart = new ArrayList<Product>();
 
+	public ArrayList<Product> GetProducts()
+	{
+		return currentCart;
+	}
 	
 	public ShoppingCartWidget() {
 		title = new Label("Your Shopping Cart: ");
